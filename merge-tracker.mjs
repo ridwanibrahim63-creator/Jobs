@@ -44,14 +44,19 @@ function validateStatus(status) {
   const aliases = {
     // Spanish → English
     'evaluada': 'Evaluated', 'condicional': 'Evaluated', 'hold': 'Evaluated', 'evaluar': 'Evaluated', 'verificar': 'Evaluated',
-    'aplicado': 'Applied', 'enviada': 'Applied', 'aplicada': 'Applied', 'applied': 'Applied', 'sent': 'Applied',
+    'aplicado': 'Applied', 'enviada': 'Applied', 'aplicada': 'Applied',
     'respondido': 'Responded',
     'entrevista': 'Interview',
     'oferta': 'Offer',
     'rechazado': 'Rejected', 'rechazada': 'Rejected',
     'descartado': 'Discarded', 'descartada': 'Discarded', 'cerrada': 'Discarded', 'cancelada': 'Discarded',
-    'no aplicar': 'SKIP', 'no_aplicar': 'SKIP', 'skip': 'SKIP', 'monitor': 'SKIP',
-    'geo blocker': 'SKIP',
+    'no aplicar': 'SKIP', 'no_aplicar': 'SKIP',
+    // English → English passthrough
+    'applied': 'Applied', 'sent': 'Applied', 'evaluated': 'Evaluated',
+    'rejected': 'Rejected',
+    'closed': 'Discarded', 'discarded': 'Discarded', 'canceled': 'Discarded',
+    'skip': 'SKIP', 'skipped': 'SKIP', 'no_apply': 'SKIP', 'skip_apply': 'SKIP', 'monitor': 'SKIP',
+    'geo blocker': 'SKIP', 'geo_blocker': 'SKIP',
   };
 
   if (aliases[lower]) return aliases[lower];
@@ -179,7 +184,12 @@ function parseTsvContent(content, filename) {
   return addition;
 }
 
+// ---- Exports ----
+export { validateStatus, normalizeCompany, roleFuzzyMatch, extractReportNum, parseScore, parseAppLine, parseTsvContent };
+
 // ---- Main ----
+
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
 
 // Read applications.md
 if (!existsSync(APPS_FILE)) {
@@ -329,3 +339,5 @@ if (VERIFY && !DRY_RUN) {
     process.exit(1);
   }
 }
+
+} // end main guard
