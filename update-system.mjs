@@ -157,7 +157,9 @@ async function check() {
     if (res.ok) {
       const release = await res.json();
       changelog = release.body || '';
-      releaseVersion = (release.tag_name || '').replace(/^v/, '');
+      const rawTag = String(release.tag_name || '').trim();
+      const match = rawTag.match(/^v?(\d+\.\d+\.\d+)$/i);
+      releaseVersion = match ? match[1] : '';
     }
   } catch {
     // No release info available, that's OK
