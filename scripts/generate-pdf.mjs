@@ -11,15 +11,16 @@
  */
 
 import { chromium } from 'playwright';
-import { resolve, dirname } from 'path';
+import { resolve, dirname, join } from 'path';
 import { readFile } from 'fs/promises';
-import { mkdirSync } from 'fs';
+import { mkdirSync, existsSync } from 'fs';
 import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+const projectRoot = join(__dirname, '..');
 
 // Ensure output directory exists (fresh setup)
-mkdirSync(resolve(__dirname, 'output'), { recursive: true });
+mkdirSync(resolve(projectRoot, 'output'), { recursive: true });
 
 /**
  * Normalize text for ATS compatibility by converting problematic Unicode.
@@ -112,8 +113,13 @@ async function generatePDF() {
   // Read HTML to inject font paths as absolute file:// URLs
   let html = await readFile(inputPath, 'utf-8');
 
-  // Resolve font paths relative to career-ops/fonts/
-  const fontsDir = resolve(__dirname, 'fonts');
+  // Resolve font paths relative to career-ops/templates/fonts/
+  const fontsDir = resolve(projectRoot, 'templates', 'fonts');
+  if (!existsSync(fontsDir)) {
+    console.error(`❌ Fonts directory not found: ${fontsDir}`);
+    console.error('   Run: npm run doctor  to diagnose setup issues.');
+    process.exit(1);
+  }
   html = html.replace(
     /url\(['"]?\.\/fonts\//g,
     `url('file://${fontsDir}/`
