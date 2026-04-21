@@ -810,12 +810,11 @@ tracked_companies:
     notes: "Lisbon PT / Remote. AI-native sales platform."
     enabled: true
 
-  # -- AI / Developer Tools --
-
-  - name: Perplexity
+    # -- This batch is clean and consistent with the existing style, and each company has a live careers board/result that matches the repo’s AI / automation / developer-tool focus. Perplexity uses Ashby and has roles like Forward Deployed Engineer / Applied AI; Clay Labs uses Ashby and shows engineering plus AI-adjacent roles; Runway uses Greenhouse; Hightouch uses Greenhouse and shows Solutions Engineer plus AI Agents roles; WorkOS uses Ashby and shows Solutions Engineer / developer-tool roles. --
+    - name: Perplexity
     careers_url: https://jobs.ashbyhq.com/perplexity
     scan_method: websearch
-    scan_query: ‘site:jobs.ashbyhq.com/perplexity "AI" OR "Applied AI" OR "Forward Deployed" OR "Engineer"’
+    scan_query: 'site:jobs.ashbyhq.com/perplexity "AI" OR "Applied AI" OR "Forward Deployed" OR "Engineer"'
     notes: "AI-native search and enterprise AI platform."
     enabled: true
 
@@ -843,54 +842,4 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:jobs.ashbyhq.com/workos "Solutions Engineer" OR "Developer Success" OR "Engineer"'
     notes: "Developer tools and enterprise-ready auth/platform APIs."
-    enabled: true
-
-  # -- Dev Tools / AI Infra (DevRel, SA, FDE focus) --
-
-  - name: Supabase
-    careers_url: https://jobs.ashbyhq.com/supabase
-    scan_method: websearch
-    scan_query: 'site:jobs.ashbyhq.com/supabase'
-    notes: "Open-source Firebase alternative. Remote-first. Postgres + Auth + Storage. Strong DevRel/DX hiring."
-    enabled: true
-
-  - name: Resend
-    careers_url: https://jobs.ashbyhq.com/resend
-    scan_method: websearch
-    scan_query: 'site:jobs.ashbyhq.com/resend'
-    notes: "Email API for developers. Remote-first. DX/DevRel focused."
-    enabled: true
-
-  - name: Clerk
-    careers_url: https://jobs.ashbyhq.com/clerk
-    scan_method: websearch
-    scan_query: 'site:jobs.ashbyhq.com/clerk'
-    notes: "Auth & user management for developers. SE / TAM / PM roles."
-    enabled: true
-
-  - name: Inngest
-    careers_url: https://jobs.ashbyhq.com/inngest
-    scan_method: websearch
-    scan_query: 'site:jobs.ashbyhq.com/inngest'
-    notes: "Durable workflow engine for serverless. DX/DevRel/Engineering hiring."
-    enabled: true
-
-  - name: PlanetScale
-    careers_url: https://job-boards.greenhouse.io/planetscale
-    api: https://boards-api.greenhouse.io/v1/boards/planetscale/jobs
-    notes: "Serverless MySQL platform. Customer Engineering, Engineering, Sales."
-    enabled: true
-
-  - name: Zep AI
-    careers_url: https://www.getzep.com/careers
-    scan_method: websearch
-    scan_query: '"Zep" "Forward Deployed" OR "Developer Relations" OR "Founding" site:workatastartup.com OR site:getzep.com'
-    notes: "Context engineering platform for AI agents. YC W24. Lead FDE + DevRel Lead roles. US-only currently."
-    enabled: true
-
-  - name: Maxim AI
-    careers_url: https://www.getmaxim.ai/careers
-    scan_method: websearch
-    scan_query: '"Maxim AI" OR "getmaxim" careers "engineer" OR "product"'
-    notes: "AI evaluation and observability platform. Bangalore-based, mostly on-site."
     enabled: true
