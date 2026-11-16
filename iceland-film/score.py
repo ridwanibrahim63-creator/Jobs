@@ -181,8 +181,9 @@ def build():
     place(dry, tick(.1), 3.0, .3)
     place(dry, whoosh(.6), 4.5, .22, pan=-.3)
     place(dry, boom(1.8, 80, 36, .2), 4.8, .5)               # the trip starts
-    place(dry, whoosh(.7), 12.2, .22, pan=.3)                # into the crater pull-out
-    place(dry, boom(1.8, 80, 36, .2), 12.6, .5)
+    place(dry, boom(1.6, 80, 36, .2), 11.4, .5)              # match cut
+    place(dry, whoosh(.7), 13.4, .22, pan=.3)                # into the crater pull-out
+    place(dry, boom(1.8, 80, 36, .2), 13.8, .5)               # crater
     place(dry, boom(1.6, 80, 36, .2), 19.2, .45)             # geothermal sun
     place(dry, whoosh(.8), 20.0, .22)
     place(dry, riser(2.6), 21.1, .5)                         # build into the drop
@@ -201,7 +202,7 @@ def build():
     def window(a, b, ramp=.5):
         return np.clip((t - a) / ramp, 0, 1) * np.clip((b - t) / ramp, 0, 1)
     water = band_noise(DUR, 90, 6000, .55)[:N]; water2 = band_noise(DUR, 90, 6000, .55)[:N]
-    wenv = window(14.4, 15.6, .15) * .4 + window(20.4, 24.0, .8) * .42 + window(24.0, 30.2, .2) * .5
+    wenv = window(15.6, 16.8, .15) * .4 + window(19.2, 24.0, .8) * .42 + window(24.0, 30.2, .2) * .5
     amb[0] += water * wenv * .16; amb[1] += water2 * wenv * .16
     road = band_noise(DUR, 40, 260, .3)[:N]
     amb += road * window(4.8, 6.1, .15) * .12

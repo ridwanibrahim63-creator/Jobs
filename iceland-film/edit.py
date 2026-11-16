@@ -38,8 +38,15 @@ def flash(i, src, t, **kw):
                 fix=kw.pop("fix", {}), **kw)
 
 
+def photo(i, name, src, crop, fix=None, beats=2, **kw):
+    """A still with keyframed movement; crop keys run 0..1 through the shot."""
+    return dict(id=i, name=name, src=src, beats=beats, still=True, time=[(0, 0), (1, 1)],
+                crop=crop, fix=fix or {}, **kw)
+
+
+# The 21 top-ranked shots (docs/05-shot-ranking.md). Hard cuts on the beat throughout.
 SHOTS = [
- # ---- HOOK: map punch-in, then nine 0.2 s flashes of what is coming
+ # ---- HOOK: map, then a strobe of what is coming (ref A / C)
  dict(id=1,  name="map-zoom",        src="RPReplay", beats=1, vf="transpose=1",
       time=[(0, .85), (1, 1.5)], crop=[(0, .5, .5, 1)], fix=dict(exp=.9, sat=.85)),
  flash(1, "DJI_0127", 1.0, cx=.52, fix=dict(exp=.93, con=1.06)),
@@ -47,63 +54,55 @@ SHOTS = [
  flash(3, "copy_19AB", 7.0, cx=.53),
  flash(4, "DJI_0123", 46.0, cx=.58, fix=dict(con=1.06)),
  flash(5, "IMG_2701", 0, still=True, fix=dict(sat=.88)),
- flash(6, "IMG_2169", 6.0, cx=.62),
+ flash(6, "IMG_2014", 0, still=True, cx=.56, fix=dict(sat=.92)),
  flash(7, "IMG_2600", 5.0),
  flash(8, "DJI_0118", 58.2, cx=.64),
  flash(9, "DJI_0129", 8.0, cx=.51, fix=dict(con=1.05)),
- # ---- TITLE over the road
+ # ---- HERO + TITLE: type holds while the picture cuts beneath it (ref A / B)
  dict(id=4,  name="road-hyperlapse", src="DJI_0103", beats=4,
       time=[(0, 12), (.3, 21), (.6, 27), (1, 31)],
-      crop=[(12, .50, .5, 1), (33.5, .52, .5, 1)], fix=dict(con=1.04), title=True, interp=2,
-      flash=True),
- # ---- THE TRIP: road, people, places — one or two beats each
- dict(id=30, name="watch-compass", src="DSCF9166", beats=2, still=True,
-      time=[(0, 0), (1, 1)], crop=[(0, .47, .52, 1.22), (1, .47, .52, 1.36)], fix=dict(con=1.04)),
- dict(id=3,  name="drive-pov",       src="IMG_2175", beats=2,
-      time=[(0, 15.6), (1, 17.7)], crop=[(15.2, .55, .46, 1.12), (19.4, .50, .46, 1.12)],
-      fix=dict(exp=.97, temp=-.03, sat=.92)),
- dict(id=18, name="car-follow",      src="DJI_0102", beats=3,
-      time=[(0, 1.0), (1, 5.4)], crop=[(0, .58, .5, 1), (3.3, .62, .5, 1), (6.7, .69, .5, 1)],
-      fix=dict(con=1.04)),
- dict(id=34, name="drone-setup", src="DSCF9120", beats=2, still=True,
-      time=[(0, 0), (1, 1)], crop=[(0, .5, .56, 1.0), (1, .52, .58, 1.1)], fix=dict(con=1.03)),
+      crop=[(12, .50, .5, 1), (33.5, .52, .5, 1)], fix=dict(con=1.04), interp=2),
+ # ---- THE TRIP: two beats a shot, a person in most of them (ref B)
+ photo(34, "drone-setup", "DSCF9120", [(0, .5, .56, 1.0), (1, .52, .58, 1.1)], dict(con=1.03)),
  dict(id=5,  name="takeoff-reveal",  src="DJI_0118", beats=2,
       time=[(0, 1.0), (1, 3.6)],
       crop=[(0, .43, .5, 1), (1.5, .43, .5, 1), (3, .48, .5, 1), (5, .60, .5, 1)], fix={}),
+ dict(id=18, name="car-follow",      src="DJI_0102", beats=3,
+      time=[(0, 1.0), (1, 5.4)], crop=[(0, .58, .5, 1), (3.3, .62, .5, 1), (6.7, .69, .5, 1)],
+      fix=dict(con=1.04)),
+ photo(30, "watch-compass", "DSCF9166", [(0, .47, .52, 1.22), (1, .47, .52, 1.36)], dict(con=1.04)),
+ # subject-locked match cut (ref D): arms open on the tundra -> arms wide on the glacier
  dict(id=9,  name="arms-open",       src="DJI_0123", beats=2,
       time=[(0, 11.7), (1, 12.9)],
       crop=[(11.7, .39, .5, 1), (12, .36, .5, 1), (12.6, .29, .5, 1), (12.9, .26, .5, 1)],
       fix=dict(exp=.86, sat=.82, temp=.03)),
+ dict(id=24, name="glacier-arms",    src="IMG_2687_2", beats=2,
+      time=[(0, 5.1), (1, 6.3)], crop=[(5.1, .5, .40, 1.55), (5.5, .5, .43, 1.3), (6.3, .5, .5, 1.0)],
+      fix=dict(sat=.88)),
+ photo(35, "snowmobile-convoy", "IMG_2014", [(0, .55, .5, 1.0), (1, .58, .49, 1.12)], dict(sat=.92)),
  dict(id=20, name="kerid-crater",    src="copy_19AB", beats=3,
       time=[(0, 4.0), (1, 8.4)], crop=[(0, .53, .5, 1)], fix=dict(con=1.04)),
  dict(id=21, name="seljalandsfoss",  src="IMG_2600", beats=2,
       time=[(0, 4.6), (1, 5.8)], crop=[(0, .5, .5, 1)], fix=dict(con=1.04)),
- dict(id=35, name="snowmobile-convoy", src="IMG_2014", beats=2, still=True,
-      time=[(0, 0), (1, 1)], crop=[(0, .55, .5, 1.0), (1, .58, .49, 1.12)], fix=dict(sat=.92)),
- dict(id=24, name="glacier-arms",    src="IMG_2687_2", beats=2,
-      time=[(0, 4.9), (1, 6.1)], crop=[(0, .5, .5, 1)], fix=dict(sat=.88)),
- dict(id=32, name="huddle", src="IMG_2701", beats=2, still=True,
-      time=[(0, 0), (1, 1)], crop=[(0, .5, .5, 1.0), (1, .5, .5, 1.1)], fix=dict(sat=.88)),
- dict(id=33, name="crew-truck", src="IMG_2707", beats=2, still=True,
-      time=[(0, 0), (1, 1)], crop=[(0, .40, .5, 1.0), (1, .61, .5, 1.0)], fix=dict(sat=.88)),
+ # the friends beat: the film's emotional centre (ref C's group hold)
+ photo(32, "huddle", "IMG_2701", [(0, .5, .5, 1.0), (1, .5, .5, 1.1)], dict(sat=.88)),
+ photo(33, "crew-truck", "IMG_2707", [(0, .40, .5, 1.0), (1, .61, .5, 1.0)], dict(sat=.88)),
+ # ---- GULLFOSS BUILD
  dict(id=10, name="gullfoss-reveal", src="DJI_0131", beats=3,
       time=[(0, 8.0), (.4, 11.8), (1, 15.0)],
       crop=[(5, .72, .5, 1), (9, .62, .5, 1), (12, .50, .5, 1), (15, .36, .5, 1), (16, .33, .5, 1)],
       fix=dict(con=1.05), interp=4),
- dict(id=2,  name="frozen-falls",    src="DJI_0127", beats=1,
-      time=[(0, 1.5), (1, 2.25)], crop=[(0, .50, .5, 1), (5, .57, .5, 1)],
+ dict(id=2,  name="ice-curtain",     src="DJI_0127", beats=3,
+      time=[(0, .4), (1, 2.9)], crop=[(0, .50, .5, 1), (5, .57, .5, 1)],
       fix=dict(exp=.93, con=1.06)),
- dict(id=11, name="ice-detail",      src="DSCF9213", beats=1, neutral=True,
-      time=[(0, .5), (1, 1.1)], crop=[(.3, .42, .5, 1), (1.5, .42, .5, 1.06)],
-      fix=dict(sat=.8, tint=-.06, temp=-.035)),
- dict(id=13, name="canyon-glide",    src="DJI_0127", beats=1,
-      time=[(0, 14.0), (1, 15.5)], crop=[(13.5, .62, .5, 1), (16.5, .66, .5, 1)],
-      fix=dict(exp=.95, con=1.06)),
- # ---- PAYOFF
+ dict(id=13, name="canyon-glide",    src="DJI_0127", beats=2,
+      time=[(0, 13.6), (1, 16.2)], crop=[(13.5, .62, .5, 1), (16.5, .66, .5, 1)],
+      fix=dict(exp=.95, con=1.06), close_bars=13),      # letterbox close to black (ref A)
+ # ---- PAYOFF: the one long hold
  dict(id=14, name="the-drop",        src="DJI_0123", beats=6,
       time=[(0, 42.4), (1, 46.0)],
       crop=[(41, .45, .5, 1), (43.5, .45, .5, 1), (46.5, .60, .5, 1), (47.6, .62, .5, 1)],
-      fix=dict(con=1.06), flash=True),
+      fix=dict(con=1.06)),
  dict(id=15, name="gullfoss-sunset", src="DJI_0129", beats=4,
       time=[(0, 6), (1, 10.8)], crop=[(6, .50, .5, 1), (12, .53, .5, 1)],
       fix=dict(con=1.05, temp=.02)),
@@ -114,9 +113,10 @@ SHOTS = [
  dict(id=17, name="lake-sunset",     src="DJI_0104", beats=5,
       time=[(0, 16.8), (1, 19.0)], crop=[(0, .5, .5, 1)], track_sun=True,
       fix=dict(temp=.03), from_white=12, fade_out=10),
- dict(id=36, name="aurora", src="IMG_1900", beats=4, still=True,
-      time=[(0, 0), (1, 1)], crop=[(0, .5, .46, 1.0), (1, .5, .44, 1.1)], fix=dict(sat=1.05), from_black=12, fade_out=40, night=True),
+ photo(36, "aurora", "IMG_1900", [(0, .5, .46, 1.0), (1, .5, .44, 1.1)], dict(sat=1.05), beats=4,
+       from_black=12, fade_out=40),
 ]
+TITLE_IN, TITLE_OUT = 90, 180     # frames: on at beat 5, off (hard) two beats into the next shot
 
 
 def nframes(s):
@@ -332,7 +332,7 @@ def render_shot(shot):
         fix["neutral"] = neutral_fit(frames[0])
     rng = np.random.default_rng(1000 + shot["id"])
     ttl = None
-    if shot.get("title"):
+    if start < TITLE_OUT and start + n_out > TITLE_IN:
         ttl = [title_layer(i, sub=False) for i in range(len(TITLE_FACES) - 1)] + [title_layer(-1)]
     out = os.path.join(BUILD, f"shot{shot['id']:02d}.mkv")
     enc = subprocess.Popen(["ffmpeg", "-v", "error", "-y", "-f", "rawvideo", "-pix_fmt", "rgb24",
@@ -379,10 +379,15 @@ def render_shot(shot):
                 wsum += wgt
         img = grade(acc / wsum, fix)
         img = finish(img, rng)
-        if ttl is not None and n >= BEAT:                     # pops in on the 2nd beat
-            j = min((n - BEAT) // 4, len(ttl) - 1)            # new face every 4 frames
-            k = 1 - smoothstep(n_out - 16, n_out - 2, n)
-            img = apply_title(img, ttl[j][0], ttl[j][1], float(k))
+        g = start + n
+        if ttl is not None and TITLE_IN <= g < TITLE_OUT:     # holds across the picture cut
+            j = min((g - TITLE_IN) // 4, len(ttl) - 1)        # new typeface every 4 frames
+            img = apply_title(img, ttl[j][0], ttl[j][1], 1.0)
+        if shot.get("close_bars") and n >= n_out - shot["close_bars"]:
+            k = (n - (n_out - shot["close_bars"]) + 1) / (shot["close_bars"] - 2)
+            bar = int(min(1.0, k) ** 1.6 * H / 2)
+            if bar:
+                img[:bar] = 0; img[H - bar:] = 0
         if shot.get("flash") and n < 5:
             img = np.clip(img + .16 * (1 - n / 5) ** 2, 0, 1)
         if shot.get("to_white") and n >= n_out - shot["to_white"]:

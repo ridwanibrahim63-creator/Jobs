@@ -1,4 +1,6 @@
 build/
 output/
-__pycache__/
 stills/
+__pycache__/
+inspiration/*.mp4
+exports/*.mp4
