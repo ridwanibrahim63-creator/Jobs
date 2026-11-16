@@ -65,6 +65,8 @@ SHOTS = [
  dict(id=18, name="car-follow",      src="DJI_0102", beats=3,
       time=[(0, 1.0), (1, 5.4)], crop=[(0, .58, .5, 1), (3.3, .62, .5, 1), (6.7, .69, .5, 1)],
       fix=dict(con=1.04)),
+ dict(id=34, name="drone-setup", src="DSCF9120", beats=2, still=True,
+      time=[(0, 0), (1, 1)], crop=[(0, .5, .56, 1.0), (1, .52, .58, 1.1)], fix=dict(con=1.03)),
  dict(id=5,  name="takeoff-reveal",  src="DJI_0118", beats=2,
       time=[(0, 1.0), (1, 3.6)],
       crop=[(0, .43, .5, 1), (1.5, .43, .5, 1), (3, .48, .5, 1), (5, .60, .5, 1)], fix={}),
@@ -76,16 +78,14 @@ SHOTS = [
       time=[(0, 4.0), (1, 8.4)], crop=[(0, .53, .5, 1)], fix=dict(con=1.04)),
  dict(id=21, name="seljalandsfoss",  src="IMG_2600", beats=2,
       time=[(0, 4.6), (1, 5.8)], crop=[(0, .5, .5, 1)], fix=dict(con=1.04)),
- dict(id=31, name="glacier-dawn", src="F9FE209F", beats=2, still=True,
-      time=[(0, 0), (1, 1)], crop=[(0, .5, .62, 1.0), (1, .52, .64, 1.09)], fix=dict(sat=.9)),
+ dict(id=35, name="snowmobile-convoy", src="IMG_2014", beats=2, still=True,
+      time=[(0, 0), (1, 1)], crop=[(0, .55, .5, 1.0), (1, .58, .49, 1.12)], fix=dict(sat=.92)),
+ dict(id=24, name="glacier-arms",    src="IMG_2687_2", beats=2,
+      time=[(0, 4.9), (1, 6.1)], crop=[(0, .5, .5, 1)], fix=dict(sat=.88)),
  dict(id=32, name="huddle", src="IMG_2701", beats=2, still=True,
       time=[(0, 0), (1, 1)], crop=[(0, .5, .5, 1.0), (1, .5, .5, 1.1)], fix=dict(sat=.88)),
  dict(id=33, name="crew-truck", src="IMG_2707", beats=2, still=True,
       time=[(0, 0), (1, 1)], crop=[(0, .40, .5, 1.0), (1, .61, .5, 1.0)], fix=dict(sat=.88)),
- dict(id=24, name="glacier-arms",    src="IMG_2687_2", beats=2,
-      time=[(0, 4.9), (1, 6.1)], crop=[(0, .5, .5, 1)], fix=dict(sat=.88)),
- dict(id=25, name="geothermal-sun",  src="DSCF8758", beats=2, neutral=True,
-      time=[(0, 7.5), (1, 8.7)], crop=[(0, .6, .5, 1)], fix=dict(sat=.85, tint=-.04)),
  dict(id=10, name="gullfoss-reveal", src="DJI_0131", beats=3,
       time=[(0, 8.0), (.4, 11.8), (1, 15.0)],
       crop=[(5, .72, .5, 1), (9, .62, .5, 1), (12, .50, .5, 1), (15, .36, .5, 1), (16, .33, .5, 1)],
@@ -113,7 +113,9 @@ SHOTS = [
       fix=dict(temp=.02), to_white=6),
  dict(id=17, name="lake-sunset",     src="DJI_0104", beats=5,
       time=[(0, 16.8), (1, 19.0)], crop=[(0, .5, .5, 1)], track_sun=True,
-      fix=dict(temp=.03), from_white=12, fade_out=36),
+      fix=dict(temp=.03), from_white=12, fade_out=10),
+ dict(id=36, name="aurora", src="IMG_1900", beats=4, still=True,
+      time=[(0, 0), (1, 1)], crop=[(0, .5, .46, 1.0), (1, .5, .44, 1.1)], fix=dict(sat=1.05), from_black=12, fade_out=40, night=True),
 ]
 
 
@@ -389,6 +391,8 @@ def render_shot(shot):
         if shot.get("from_white") and n < shot["from_white"]:
             k = 1 - n / shot["from_white"]
             img = img + (np.array([1, .97, .92], np.float32) - img) * k ** 1.6
+        if shot.get("from_black") and n < shot["from_black"]:
+            img = img * smoothstep(0, 1, (n + 1) / shot["from_black"])
         if shot.get("fade_out") and n >= n_out - shot["fade_out"]:
             k = (n_out - 1 - n) / shot["fade_out"]
             img = img * smoothstep(0, 1, k)

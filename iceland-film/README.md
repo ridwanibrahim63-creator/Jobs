@@ -1,6 +1,6 @@
 # Iceland — A Winter Road Trip
 
-A 35-second cinematic 9:16 travel film cut from 27 clips of drone, camera and phone footage.
+A 37-second cinematic 9:16 travel film cut from 27 clips of drone, camera and phone footage and six photos.
 
 ```
 iceland-film/
@@ -9,6 +9,7 @@ iceland-film/
 ├── assets/        Cormorant Garamond roman + italic (SIL OFL) for the title
 ├── docs/          01 footage inventory · 02 reference analysis · 03 timeline · 04 QC report
 ├── output/        iceland_winter_road_trip_9x16.mp4
+├── stills/        photos used in the cut (git-ignored; matched by name like the clips)
 └── build/         intermediates (git-ignored)
 ```
 

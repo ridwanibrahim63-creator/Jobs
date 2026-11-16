@@ -39,8 +39,26 @@
 
 The four vertical phone clips are 720×1280, so they fill the frame without cropping and are the sharpest shots in the film.
 
+## Photos — 17 supplied (one sent twice), 6 used
+
+Photos are full resolution, so they are the sharpest frames in the film. They are copied to `stills/` (git-ignored).
+
+| Photo | Content | Used |
+|---|---|---|
+| DSCF9166 | Watch compass, 64.3° N | Yes |
+| DSCF9120 | Two people setting up the drone at a picnic table, golden light | Yes |
+| IMG_2014 | Snowmobile convoy on the glacier, crescent moon | Yes |
+| IMG_2701 | Helmet huddle from below | Yes (replaces the partly obscured video version) |
+| IMG_2707 | Crew of four against the glacier truck | Yes |
+| IMG_1900 | Northern lights over the bay | Yes — new final shot |
+| F9FE209F | Rider leaning on the truck at dawn | No (cut to make room for the convoy) |
+| DJI_0112 | Pilot leaning on the car, wide | No (same scene as the take-off video) |
+| DSCF8988 | Jeep under the mountains | No (dust spot in the sky; holds for a later cut) |
+| DSCF9184, DSCF9172 | Mountain beyond the Gullfoss cliffs | No (DSCF9172 has a sensor spot and a yellow cast) |
+| DJI_0133, 0084, 0080, 0078, 0082, 0079 | Telephoto drone landscapes: mountains, lake, road | No (strong, but landscapes are already well covered by video) |
+
 ## What the footage does and does not contain
 
 - **Present (both batches):** glacier snowmobiling, a frozen crater lake, geothermal steam, a second waterfall (Seljalandsfoss), drone aerials, a road and driving sequence, a frozen waterfall and canyon (Gullfoss), snow mountains, a lake at sunset, people (pilot, friend, two figures at the falls), one intimate detail shot.
-- **Absent:** volcanic scenes, slow-motion (everything is 30 fps), night or aurora. The edit does not pretend otherwise, so the subtitle reads "A winter road trip" rather than "land of fire and ice".
+- **Absent:** volcanic scenes, slow-motion (everything is 30 fps), night video (the aurora is a photo). The edit does not pretend otherwise, so the subtitle reads "A winter road trip" rather than "land of fire and ice".
 - **Audio:** six clips carry camera audio. It was not used: I cannot audition it, and the levels (peaks at 0 dBFS) suggest wind clipping and possible speech or car radio. Ambience in the film is synthesised instead.

@@ -2,7 +2,7 @@
 """Original score + sound design for the Iceland film, synthesised from scratch.
 
 No samples, no third-party music: every sound is generated here with numpy, so the
-soundtrack is free to publish. 100 BPM, D minor, 58 beats (34.8 s) — the picture is
+soundtrack is free to publish. 100 BPM, D minor, 62 beats (37.2 s) — the picture is
 cut on this grid (see edit.py).
 
     python3 score.py   ->  build/score.wav (48 kHz stereo)
@@ -12,7 +12,7 @@ import numpy as np
 
 SR = 48000
 BEAT = 0.6
-DUR = 58 * BEAT + 1.0
+DUR = 62 * BEAT + 1.0
 N = int(DUR * SR)
 rng = np.random.default_rng(7)
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -127,7 +127,7 @@ def build():
     roots = [38, 34, 41, 36]
     for b in range(16):
         at = b * bar
-        if at >= 58 * BEAT:
+        if at >= 62 * BEAT:
             break
         level = (.24 if b < 1 else .22 if b < 5 else .3 if b < 10 else .46)
         bright = .2 + .06 * b
@@ -146,7 +146,7 @@ def build():
                                                     (10, .6, True), (13.25, .4, False))):
         for bt, m in motif:
             at = start_bar * bar + bt * BEAT
-            if at > 57 * BEAT or (rep == 3 and bt > 5):
+            if at > 61 * BEAT or (rep == 3 and bt > 5):
                 continue
             place(music, keys(m, vel=vel), at, .5, pan=-.15)
             if octave:
@@ -181,15 +181,16 @@ def build():
     place(dry, tick(.1), 3.0, .3)
     place(dry, whoosh(.6), 4.5, .22, pan=-.3)
     place(dry, boom(1.8, 80, 36, .2), 4.8, .5)               # the trip starts
-    place(dry, whoosh(.7), 11.0, .22, pan=.3)                # into the crater pull-out
-    place(dry, boom(1.8, 80, 36, .2), 11.4, .5)
+    place(dry, whoosh(.7), 12.2, .22, pan=.3)                # into the crater pull-out
+    place(dry, boom(1.8, 80, 36, .2), 12.6, .5)
     place(dry, boom(1.6, 80, 36, .2), 19.2, .45)             # geothermal sun
     place(dry, whoosh(.8), 20.0, .22)
     place(dry, riser(2.6), 21.1, .5)                         # build into the drop
     place(dry, boom(3.4, 110, 28, .7), 24.0, 1.15)           # THE DROP
     place(dry, boom(2.4, 85, 32, .3), 27.6, .6)
     place(dry, whoosh(1.0), 31.2, .2)
-    place(dry, boom(3.0, 70, 30, .15), 31.8, .5)             # final shot
+    place(dry, boom(3.0, 70, 30, .15), 31.8, .5)             # sunset
+    place(dry, boom(3.4, 60, 28, .1), 34.8, .42)             # aurora
     # ---- synthetic ambience: wind bed + water roar under the waterfall shots
     wind = band_noise(DUR, 180, 900, .5)
     lfo = .55 + .45 * np.sin(2 * np.pi * .13 * t_axis(DUR) + 1) * np.sin(2 * np.pi * .05 * t_axis(DUR))
@@ -200,7 +201,7 @@ def build():
     def window(a, b, ramp=.5):
         return np.clip((t - a) / ramp, 0, 1) * np.clip((b - t) / ramp, 0, 1)
     water = band_noise(DUR, 90, 6000, .55)[:N]; water2 = band_noise(DUR, 90, 6000, .55)[:N]
-    wenv = window(13.2, 14.4, .15) * .4 + window(20.4, 24.0, .8) * .42 + window(24.0, 30.2, .2) * .5
+    wenv = window(14.4, 15.6, .15) * .4 + window(20.4, 24.0, .8) * .42 + window(24.0, 30.2, .2) * .5
     amb[0] += water * wenv * .16; amb[1] += water2 * wenv * .16
     road = band_noise(DUR, 40, 260, .3)[:N]
     amb += road * window(4.8, 6.1, .15) * .12
@@ -208,7 +209,7 @@ def build():
     mix = reverb(music, 3.4, .5) + reverb(dry, 1.8, .14) + amb
     gap = 1 - .93 * window(23.62, 24.0, .04)                 # a held breath before the drop
     mix *= gap
-    mix *= np.clip((58 * BEAT + .1 - t) / 2.6, 0, 1) ** 1.6  # long, clean tail to silence
+    mix *= np.clip((62 * BEAT + .1 - t) / 2.6, 0, 1) ** 1.6  # long, clean tail to silence
     mix *= np.clip(t / .03, 0, 1)
     mix = mix / np.abs(mix).max()
     mix = np.tanh(mix * 2.1) / np.tanh(2.1)                  # glue + soft limiting
