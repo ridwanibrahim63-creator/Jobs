@@ -34,7 +34,7 @@ W, H = (540, 960) if PREVIEW else (1080, 1920)
 def flash(i, src, t, **kw):
     """One 0.2 s frame-burst for the opening montage (three per beat)."""
     return dict(id=100 + i, name="flash-" + src, src=src, beats=1 / 3,
-                time=[(0, t), (1, t + .3)], crop=[(0, kw.pop("cx", .5), .5, kw.pop("zoom", 1.06))],
+                time=[(0, t), (1, t + .3)], crop=[(0, kw.pop("cx", .5), .5, kw.pop("zoom", 1.06))] * 1,
                 fix=kw.pop("fix", {}), **kw)
 
 
@@ -46,7 +46,7 @@ SHOTS = [
  flash(2, "IMG_2687_2", 5.2, fix=dict(sat=.88)),
  flash(3, "copy_19AB", 7.0, cx=.53),
  flash(4, "DJI_0123", 46.0, cx=.58, fix=dict(con=1.06)),
- flash(5, "IMG_2698", 10.8, fix=dict(sat=.88)),
+ flash(5, "IMG_2701", 0, still=True, fix=dict(sat=.88)),
  flash(6, "IMG_2169", 6.0, cx=.62),
  flash(7, "IMG_2600", 5.0),
  flash(8, "DJI_0118", 58.2, cx=.64),
@@ -57,6 +57,8 @@ SHOTS = [
       crop=[(12, .50, .5, 1), (33.5, .52, .5, 1)], fix=dict(con=1.04), title=True, interp=2,
       flash=True),
  # ---- THE TRIP: road, people, places — one or two beats each
+ dict(id=30, name="watch-compass", src="DSCF9166", beats=2, still=True,
+      time=[(0, 0), (1, 1)], crop=[(0, .47, .52, 1.22), (1, .47, .52, 1.36)], fix=dict(con=1.04)),
  dict(id=3,  name="drive-pov",       src="IMG_2175", beats=2,
       time=[(0, 15.6), (1, 17.7)], crop=[(15.2, .55, .46, 1.12), (19.4, .50, .46, 1.12)],
       fix=dict(exp=.97, temp=-.03, sat=.92)),
@@ -66,24 +68,24 @@ SHOTS = [
  dict(id=5,  name="takeoff-reveal",  src="DJI_0118", beats=2,
       time=[(0, 1.0), (1, 3.6)],
       crop=[(0, .43, .5, 1), (1.5, .43, .5, 1), (3, .48, .5, 1), (5, .60, .5, 1)], fix={}),
- dict(id=19, name="alpenglow",       src="IMG_2169", beats=2,
-      time=[(0, 5.0), (1, 6.2)], crop=[(5, .62, .5, 1), (6.2, .63, .5, 1.04)], fix=dict(con=1.06)),
  dict(id=9,  name="arms-open",       src="DJI_0123", beats=2,
       time=[(0, 11.7), (1, 12.9)],
       crop=[(11.7, .39, .5, 1), (12, .36, .5, 1), (12.6, .29, .5, 1), (12.9, .26, .5, 1)],
       fix=dict(exp=.86, sat=.82, temp=.03)),
- dict(id=20, name="kerid-crater",    src="copy_19AB", beats=4,
-      time=[(0, 3.4), (1, 9.2)], crop=[(0, .53, .5, 1)], fix=dict(con=1.04)),
+ dict(id=20, name="kerid-crater",    src="copy_19AB", beats=3,
+      time=[(0, 4.0), (1, 8.4)], crop=[(0, .53, .5, 1)], fix=dict(con=1.04)),
  dict(id=21, name="seljalandsfoss",  src="IMG_2600", beats=2,
       time=[(0, 4.6), (1, 5.8)], crop=[(0, .5, .5, 1)], fix=dict(con=1.04)),
- dict(id=22, name="glacier-sunrise", src="IMG_2687_2", beats=2,
-      time=[(0, .2), (1, 1.4)], crop=[(0, .5, .5, 1)], fix=dict(sat=.88)),
- dict(id=23, name="group-huddle",    src="IMG_2698", beats=2,
-      time=[(0, 10.2), (1, 11.4)], crop=[(0, .5, .5, 1)], fix=dict(sat=.88)),
+ dict(id=31, name="glacier-dawn", src="F9FE209F", beats=2, still=True,
+      time=[(0, 0), (1, 1)], crop=[(0, .5, .62, 1.0), (1, .52, .64, 1.09)], fix=dict(sat=.9)),
+ dict(id=32, name="huddle", src="IMG_2701", beats=2, still=True,
+      time=[(0, 0), (1, 1)], crop=[(0, .5, .5, 1.0), (1, .5, .5, 1.1)], fix=dict(sat=.88)),
+ dict(id=33, name="crew-truck", src="IMG_2707", beats=2, still=True,
+      time=[(0, 0), (1, 1)], crop=[(0, .40, .5, 1.0), (1, .61, .5, 1.0)], fix=dict(sat=.88)),
  dict(id=24, name="glacier-arms",    src="IMG_2687_2", beats=2,
       time=[(0, 4.9), (1, 6.1)], crop=[(0, .5, .5, 1)], fix=dict(sat=.88)),
- dict(id=25, name="geothermal-sun",  src="DSCF8758", beats=3, neutral=True,
-      time=[(0, 7.2), (1, 9.0)], crop=[(0, .6, .5, 1)], fix=dict(sat=.85, tint=-.04)),
+ dict(id=25, name="geothermal-sun",  src="DSCF8758", beats=2, neutral=True,
+      time=[(0, 7.5), (1, 8.7)], crop=[(0, .6, .5, 1)], fix=dict(sat=.85, tint=-.04)),
  dict(id=10, name="gullfoss-reveal", src="DJI_0131", beats=3,
       time=[(0, 8.0), (.4, 11.8), (1, 15.0)],
       crop=[(5, .72, .5, 1), (9, .62, .5, 1), (12, .50, .5, 1), (15, .36, .5, 1), (16, .33, .5, 1)],
@@ -123,7 +125,8 @@ TOTAL = sum(nframes(s) for s in SHOTS)
 
 
 def src_path(key):
-    hits = sorted(glob.glob(os.path.join(SRC, f"*{key}*.mp4")))
+    hits = sorted(glob.glob(os.path.join(SRC, f"*{key}*.mp4"))) or \
+        sorted(glob.glob(os.path.join(HERE, "stills", f"*{key}*.jpg")))
     if not hits:
         sys.exit(f"missing source clip *{key}*.mp4 in {SRC}")
     return hits[0]
@@ -314,8 +317,13 @@ def render_shot(shot):
     n_out = nframes(shot)
     start = sum(nframes(s) for s in SHOTS[: SHOTS.index(shot)])
     ts = [k[1] for k in shot["time"]]
-    frames, fps, t_first = decode(src_path(shot["src"]), min(ts), max(ts) + .2, shot.get("vf"),
-                                  shot.get("interp", 1))
+    still = shot.get("still")
+    if still:                                                 # photo: one frame, crop keyed 0..1
+        frames = np.asarray(Image.open(src_path(shot["src"])).convert("RGB"))[None]
+        fps, t_first = 1.0, 0.0
+    else:
+        frames, fps, t_first = decode(src_path(shot["src"]), min(ts), max(ts) + .2, shot.get("vf"),
+                                      shot.get("interp", 1))
     sun = track_sun(frames) if shot.get("track_sun") else None
     fix = dict(shot.get("fix", {}))
     if shot.get("neutral"):
@@ -332,7 +340,7 @@ def render_shot(shot):
 
     def sample(idx_f, zmul=1.0):
         i = int(np.clip(round(idx_f), 0, len(frames) - 1))
-        tsrc = t_first + i / fps
+        tsrc = idx_f if still else t_first + i / fps
         cx, cy, zoom = interp_keys(shot["crop"], tsrc)
         if sun is not None:
             cx = float(sun[i])
@@ -352,6 +360,8 @@ def render_shot(shot):
         if spd < .9:                                        # slowed (tracked shot): blend neighbours
             i0 = np.floor(a); fr = a - i0
             parts = [(i0, 1 - fr), (i0 + 1, fr)] if fr > .02 else [(i0, 1.0)]
+        elif still:
+            parts = [(n / max(n_out - 1, 1), 1.0)]
         elif spd < 2.5:                                     # near real-time: one crisp frame
             parts = [(a, 1.0)]
         else:                                                 # sped up: integrate = natural motion blur
